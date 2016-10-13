@@ -37,7 +37,6 @@ while test $# -gt 0; do
                 echo $1 > $FINDROOT
                 if [ -f ".git/info/exclude" ]; then
                     grep -q -F "$FINDROOT" ".git/info/exclude" || echo "$FINDROOT" >> ".git/info/exclude"
-                    echo "directory info not saved in .git/info/exclude"
                 fi
             else
                 echo "The directory $1 does not exist"
@@ -72,3 +71,4 @@ if [ -n "$INPUT" ]; then
 else
     echo "Please use the following syntax => $./reactfind [options] COMPONENTNAME"
 fi
+exit 0
