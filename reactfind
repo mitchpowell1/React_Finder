@@ -1,7 +1,8 @@
 #!/bin/bash
 PARTIALFLAG=false
-if [ -f .findreact_root ]; then
-    ROOTPATH=$( cat .findreact_root )
+FINDROOT=".reactfind_root"
+if [ -f $FINDROOT ]; then
+    ROOTPATH=$( cat $FINDROOT )
 else
     ROOTPATH='.'
 fi
@@ -19,7 +20,7 @@ while test $# -gt 0; do
             echo "#  -p | --partial-match - Accept partial matches to your component name"
             echo "#"
             echo "#  -d | --set-root-directory - Set the directory to be searched (defaults to PWD if not configured)"
-            echo "#      Note: the root directory will be persistently configured within a file called .findreact_root."
+            echo "#      Note: the root directory will be persistently configured within a file called $FINDROOT."
             echo "#         This file will be excluded from git if the working directory is configured as a git repository" 
             echo "###############################################"
             exit 0
@@ -33,10 +34,11 @@ while test $# -gt 0; do
         -d | --set-root-directory)
             shift
             if [ -d $1 ]; then
-                echo $1 > ./.findreact_root
-                #if [ -f ".git/info/exclude" && (grep -q ".findreact_root" ".git/info/exclude") ]; then
-                #    echo "directory info not saved in .git/info/exclude"
-                #fi
+                echo $1 > $FINDROOT
+                if [ -f ".git/info/exclude" ]; then
+                    grep -q "$FINDROOT" ".git/info/exclude" || echo "$FINDROOT" >> ".git/info/exclude"
+                    echo "directory info not saved in .git/info/exclude"
+                fi
             else
                 echo "The directory $1 does not exist"
                 exit 1
