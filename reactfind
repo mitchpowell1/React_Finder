@@ -36,7 +36,7 @@ while test $# -gt 0; do
             if [ -d $1 ]; then
                 echo $1 > $FINDROOT
                 if [ -f ".git/info/exclude" ]; then
-                    grep -q "$FINDROOT" ".git/info/exclude" || echo "$FINDROOT" >> ".git/info/exclude"
+                    grep -q -F "$FINDROOT" ".git/info/exclude" || echo "$FINDROOT" >> ".git/info/exclude"
                     echo "directory info not saved in .git/info/exclude"
                 fi
             else
@@ -68,7 +68,7 @@ if [ -n "$INPUT" ]; then
     fi
     echo "Root directory can be configured with the -d flag. (Use -h for more info)"
     echo ""
-    grep "class $INPUT extends [(React | Component)]" -H -i -r $ROOTPATH | cut -d: -f1 
+    grep "class $INPUT extends [(React | Component)]" -H -i -r $ROOTPATH | cut -d : -f1 
 else
     echo "Please use the following syntax => $./reactfind [options] COMPONENTNAME"
 fi
