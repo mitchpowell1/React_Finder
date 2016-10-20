@@ -48,7 +48,7 @@ while test $# -gt 0; do
         -l | --logs)
             echo "Searching $ROOTPATH for files containing logs"
             echo
-            grep "console.log(.*)" -H -i -r $ROOTPATH | cut -d : -f1
+            grep "console\.log(.*)" -H -i -r $ROOTPATH | cut -d : -f1
             exit 0
             ;;
             
